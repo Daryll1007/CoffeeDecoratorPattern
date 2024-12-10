@@ -6,21 +6,19 @@ namespace CoffeeDecoratorPattern
     {
         static void Main(string[] args)
         {
-            // a Basic Coffee
-            ICoffee myCoffee = new BasicCoffee();
-            Console.WriteLine($"{myCoffee.GetDescription()} - ${myCoffee.GetCost()}");
+            // Create a ConcreteComponent object
+            IComponent<string> component = new ConcreteComponent();
 
-            // Add Milk to the Coffee
-            myCoffee = new MilkDecorator(myCoffee);
-            Console.WriteLine($"{myCoffee.GetDescription()} - ${myCoffee.GetCost()}");
+            // Apply decorators
+            IComponent<string> decoratedPlain = new PlainDecorator(component);
+            IComponent<string> decoratedUpperCase = new UpperCaseDecorator(decoratedPlain);
+            IComponent<string> decoratedColor = new ColorDecorator(decoratedUpperCase);
 
-            // Add Sugar to the Coffee
-            myCoffee = new SugarDecorator(myCoffee);
-            Console.WriteLine($"{myCoffee.GetDescription()} - ${myCoffee.GetCost()}");
-
-            // Add Espresso Shot to the Coffee
-            myCoffee = new EspressoDecorator(myCoffee);
-            Console.WriteLine($"{myCoffee.GetDescription()} - ${myCoffee.GetCost()}");
+            // Print the result after applying decorators
+            Console.WriteLine("Original: " + component.GetText());
+            Console.WriteLine("After PlainDecorator: " + decoratedPlain.GetText());
+            Console.WriteLine("After UpperCaseDecorator: " + decoratedUpperCase.GetText());
+            Console.WriteLine("After ColorDecorator: " + decoratedColor.GetText());
         }
     }
 }
